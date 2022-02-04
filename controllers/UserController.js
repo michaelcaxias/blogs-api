@@ -18,7 +18,16 @@ const createUser = async (req, res) => {
   return res.status(201).json(data);
 };
 
+const getAllUsers = async (req, res) => {
+  const { status, message, data } = await UserServices.getAllUsers();
+  if (status >= 400) {
+    return res.status(status).json({ message });
+  }
+  return res.status(200).json(data);
+};
+
 module.exports = {
   createUser,
   loginUser,
+  getAllUsers,
 };

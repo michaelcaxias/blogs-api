@@ -1,11 +1,14 @@
 const express = require('express');
+const { verifyToken } = require('./controllers/middlewares/verifyToken');
 const userController = require('./controllers/UserController');
 
 const app = express();
 
 app.use(express.json());
 
-app.route('/user').post(userController.createUser);
+app.route('/user')
+.post(userController.createUser)
+.get(verifyToken, userController.getAllUsers);
 
 app.route('/login').post(userController.loginUser);
 
