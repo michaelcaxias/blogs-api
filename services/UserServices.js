@@ -1,6 +1,7 @@
 const Joi = require('joi');
 const jwt = require('jsonwebtoken');
 const { User } = require('../models');
+const { responseValidate } = require('../utils');
 
 const createUserScheme = Joi.object({
   displayName: Joi.string().min(8).required(),
@@ -12,12 +13,6 @@ const createUserScheme = Joi.object({
 const loginScheme = Joi.object({
   email: Joi.string().email().required(),
   password: Joi.string().length(6).required(),
-});
-
-const responseValidate = (status = 200, message = '', data = {}) => ({
-  status,
-  message,
-  data,
 });
 
 const findUserByEmail = async (email) => {
