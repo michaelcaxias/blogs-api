@@ -20,6 +20,17 @@ const create = async ({ name }) => {
   }
 };
 
+const getAll = async () => {
+  try {
+    const getAllCategory = await Category.findAll();
+
+    return responseValidate(200, '', getAllCategory);
+  } catch (error) {
+    return responseValidate(500, error.message);
+  }
+};
+
 module.exports = {
   create,
+  getAll,
 };
