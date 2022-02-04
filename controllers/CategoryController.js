@@ -6,7 +6,7 @@ const create = async (req, res) => {
   if (status >= 400) {
     return res.status(status).json({ message });
   }
-  return res.status(200).json(data);
+  return res.status(status).json(data);
 };
 
 module.exports = {

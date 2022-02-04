@@ -15,7 +15,7 @@ app.route('/user/:id').get(verifyToken, userController.getUserById);
 
 app.route('/login').post(userController.loginUser);
 
-app.route('/categories').post(categoriesController.create);
+app.route('/categories').post(verifyToken, categoriesController.create);
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
 
