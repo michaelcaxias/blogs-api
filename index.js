@@ -10,6 +10,8 @@ app.route('/user')
 .post(userController.createUser)
 .get(verifyToken, userController.getAllUsers);
 
+app.route('/user/:id').get(verifyToken, userController.getUserById);
+
 app.route('/login').post(userController.loginUser);
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));

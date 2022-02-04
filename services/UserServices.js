@@ -87,8 +87,23 @@ const getAllUsers = async () => {
   }
 };
 
+const getUserById = async (id) => {
+  try {
+    const user = await User.findOne({ where: { id } });
+
+    if (!user) {
+      return responseValidate(404, 'User does not exist');
+    }
+
+    return responseValidate(200, '', user);
+  } catch (error) {
+    return responseValidate(500, error.message);
+  }
+};
+
 module.exports = {
   createUser,
   loginUser,
   getAllUsers,
+  getUserById,
 };
