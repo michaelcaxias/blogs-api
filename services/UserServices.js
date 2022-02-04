@@ -1,4 +1,5 @@
 const Joi = require('joi');
+const jwt = require('jsonwebtoken');
 const { User } = require('../models');
 
 const scheme = Joi.object({
@@ -32,7 +33,14 @@ const createUser = async (user) => {
     }
 
     const newUser = await User.create(user);
-    return responseValidate(201, '', newUser);
+
+    const jwtConfig = {
+      expiresIn: '3d',
+    };
+
+    const token = jwt.sign({ id: newUser.id }, process.env.JWT_SECRET, jwtConfig);
+
+    return responseValidate(201, '', { token });
   } catch (error) {
     return responseValidate(500, error.message);
   }
