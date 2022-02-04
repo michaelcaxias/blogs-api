@@ -7,6 +7,8 @@ app.use(express.json());
 
 app.route('/user').post(userController.createUser);
 
+app.route('/login').post(userController.loginUser);
+
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
 
 // não remova esse endpoint, e para o avaliador funcionar
