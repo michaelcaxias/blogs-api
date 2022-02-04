@@ -14,12 +14,21 @@ const responseValidate = (status = 200, message = '', data = {}) => ({
   data,
 });
 
+const findUserByEmail = async (email) => {
+  const user = await User.findOne({ where: { email } });
+  return user;
+};
+
 const createUser = async (user) => {
   try {
     const { error } = scheme.validate(user);
 
     if (error) {
      return responseValidate(400, error.message);
+    }
+
+    if (await findUserByEmail(user.email)) {
+      return responseValidate(409, 'User already registered');
     }
 
     const newUser = await User.create(user);

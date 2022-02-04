@@ -3,7 +3,6 @@ const User = (sequelize, DataTypes) => {
     displayName: DataTypes.STRING,
     email: {
       type: DataTypes.STRING,
-      unique: true,
     },
     password: DataTypes.STRING,
     image: DataTypes.STRING,
