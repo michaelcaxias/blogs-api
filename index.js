@@ -2,6 +2,7 @@ const express = require('express');
 const { verifyToken } = require('./controllers/middlewares/verifyToken');
 const userController = require('./controllers/UserController');
 const categoriesController = require('./controllers/CategoryController');
+const blogPostController = require('./controllers/BlogPostController');
 
 const app = express();
 
@@ -18,6 +19,8 @@ app.route('/login').post(userController.loginUser);
 app.route('/categories')
 .post(verifyToken, categoriesController.create)
 .get(verifyToken, categoriesController.getAll);
+
+app.route('/post').post(verifyToken, blogPostController.create);
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
 
