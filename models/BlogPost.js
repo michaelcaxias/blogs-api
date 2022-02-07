@@ -1,6 +1,8 @@
 const BlogPost = (sequelize, DataTypes) => {
-  const CategoryTable = sequelize.define('BlogPosts', {
-    name: DataTypes.STRING,
+  const CategoryTable = sequelize.define('BlogPost', {
+    title: DataTypes.STRING,
+    content: DataTypes.STRING,
+    categoryIds: DataTypes.STRING,
   }, {
     timestamps: false,
   });
