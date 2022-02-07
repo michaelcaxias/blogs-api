@@ -14,9 +14,9 @@ module.exports = {
       content: {
         type: Sequelize.STRING
       },
-      categoryIds: {
-        type: Sequelize.STRING
-      }
+      userId: {
+        type: Sequelize.INTEGER
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
