@@ -20,7 +20,8 @@ app.route('/categories')
 .post(verifyToken, categoriesController.create)
 .get(verifyToken, categoriesController.getAll);
 
-app.route('/post').post(verifyToken, blogPostController.create);
+app.route('/post').post(verifyToken, blogPostController.create)
+.get(verifyToken, blogPostController.getAll);
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
 

@@ -1,6 +1,6 @@
 const Joi = require('joi');
 const { responseValidate } = require('../utils');
-const { BlogPost, Category } = require('../models');
+const { BlogPost, Category, User } = require('../models');
 
 const schemeCreate = Joi.object({
   title: Joi.string().required(),
@@ -32,6 +32,22 @@ const create = async ({ user, title, content, categoryIds }) => {
   }
 };
 
+const getAll = async () => {
+  try {
+    const getAllBlog = BlogPost.findAll({
+      include: [
+        { model: User, as: 'user', attributes: { exclude: ['password'] } },
+        { model: Category, as: 'category' },
+      ],
+    });
+
+    return responseValidate(200, '', getAllBlog);
+  } catch (error) {
+    return responseValidate(500, error.message);
+  }
+};
+
 module.exports = {
   create,
+  getAll,
 };
