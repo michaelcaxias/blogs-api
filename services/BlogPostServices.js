@@ -1,5 +1,4 @@
 const Joi = require('joi');
-const { Op } = require('sequelize');
 const { responseValidate } = require('../utils');
 const { BlogPost, Category } = require('../models');
 
@@ -16,14 +15,14 @@ const create = async ({ user, title, content, categoryIds }) => {
       return responseValidate(400, error.message);
     }
     const createPost = await BlogPost.create({
-      userId: user.id, title, content, categoryIds,
+      userId: user.id, title, content,
     });
 
-    const checkCategory = await Category.findOne({
-      where: { id: { [Op.or]: categoryIds } },
+    const checkCategory = await Category.findAll({
+      where: { id: categoryIds },
     });
 
-    if (!checkCategory) {
+    if (!checkCategory.length) {
       return responseValidate(400, '"categoryIds" not found');
     }
 
