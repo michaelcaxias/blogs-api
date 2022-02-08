@@ -9,6 +9,11 @@ const BlogPost = (sequelize, DataTypes) => {
     timestamps: false,
   });
 
+  BlogPostTable.associate = (models) => {
+    BlogPostTable.belongsTo(models.User,
+       { foreignKey: 'userId', as: 'user' });
+  };
+
   return BlogPostTable;
 };
 
