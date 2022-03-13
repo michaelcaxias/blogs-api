@@ -2,7 +2,7 @@
 
 # Blogs API
 
-Projeto feito de forma individual durante o curso da [Trybe](https://www.betrybe.com/) com o objetivo de criar um [CRUD](https://developer.mozilla.org/pt-BR/docs/Glossary/CRUD) a partir da criação de uma API RESTful com a estrutura ORM e MSC.
+Projeto feito no curso [Trybe](betrybe.com) com objetivo de criar um [CRUD](https://developer.mozilla.org/pt-BR/docs/Glossary/CRUD) a partir da criação de uma API RESTful utilizando as estruturas ORM e MSC.
 
 ## ⭐ Habilidades
 
