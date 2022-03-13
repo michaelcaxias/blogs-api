@@ -11,50 +11,6 @@ Projeto feito de forma individual durante o curso da [Trybe](https://www.betrybe
 - Validar e criptografar tokens de autenticação com o [JWT](https://jwt.io/).
 - Realizar validações com o [Joi](https://joi.dev/api/).
 
-## 🔧 Funçoes
-
-- Criar um usuário a partir de informações passadas pelo body da requisição.
-- Após a criação do usuário, é gerado um JWT a partir do ID do usuário.
-- Realizar validações dos dados passados pelo body da requisição.
-- Logar na API a partir da rota `/login` com informações já existentes no Banco de Dados.
-- Listar todos os usuários cadastrados na API com o método `GET`.
-- Mostrar um usuário específico com o método `GET` e com querys passadas por parâmetros `/user/:id`.
-- Criar uma categoria a partir de informações passadas pelo body da requisição.
-- Listar todas as categorias cadastradas na API com o método `GET`.
-- Criar um post a partir de informações passadas pelo body da requisição e com **chaves estrangeiras** da tabela de categorias.
-- Listar todas as publicações, juntamente com o usuário que a publicou e a(s) categoria(s) a qual a publicação pertence, com o método `GET`.
-```json
-[
-  {
-    "id": 1,
-    "title": "Título da publicação",
-    "content": "Descrição da publicação",
-    "userId": 1,
-    "published": "2011-08-01T19:58:00.000Z",
-    "updated": "2011-08-01T19:58:51.000Z",
-    "user": {
-      "id": 1,
-      "displayName": "Michael Caxias",
-      "email": "7michaeel7@gmail.com",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Cat_November_2010-1a.jpg/1200px-Cat_November_2010-1a.jpg"
-    },
-    "categories": [
-      {
-        "id": 1,
-        "name": "Diversão"
-      }
-    ]
-  }
-]
-```
-
-## 📓 A fazer
-- [ ] Listar publicação por ID.
-- [ ] Atualizar publicação
-- [ ] Deletar publicação
-- [ ] Deletar usuário
-- [ ] Buscar publicação por query
-
 
 ## 💻 Como iniciar
 
@@ -68,6 +24,249 @@ npm install
 ```shell
 npm run debug
 ```
+
+# 💡 Documentação da API
+
+## Cadastra um usuário
+
+```http
+  POST /user
+```
+
+| Corpo da requisição   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `displayName, email, password, image` | `json` | **Obrigatório**. Todos os campos do corpo da requisição |
+
+**Formato do corpo da requisição**
+```json
+{
+  "displayName": "Nome da Pessoa",
+  "email": "emaildapessoa@email.com",
+  "password": "123456",
+  "image": "http://4.bp.blogspot.com/_YA50adQ-7vQ/S1gfR_6ufpI/AAAAAAAAAAk/1ErJGgRWZDg/S45/imagem.png"
+}
+```
+
+**Retorno em caso de sucesso**
+
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjo1LCJkaXNwbGF5TmFtZSI6InVzdWFyaW8gZGUgdGVzdGUiLCJlbWFpbCI6InRlc3RlQGVtYWlsLmNvbSIsImltYWdlIjoibnVsbCJ9LCJpYXQiOjE2MjAyNDQxODcsImV4cCI6MTYyMDY3NjE4N30.Roc4byj6mYakYqd9LTCozU1hd9k_Vw5IWKGL4hcCVG8"
+}
+```
+
+> O retorno acima é apenas fictício
+
+
+
+## Retorna todos os usuários
+
+```http
+  GET /user/
+```
+
+**⚠️ Para fazer uma requisição é necessário estar com a chave `Authentication` com o token JWT recebido anteriormente**
+
+**Retorno em caso de sucesso**
+
+```json
+[
+  {
+    "id": "401465483996",
+    "displayName": "Brett Wiltshire",
+    "email": "brett@email.com",
+    "image": "http://4.bp.blogspot.com/_YA50adQ-7vQ/S1gfR_6ufpI/AAAAAAAAAAk/1ErJGgRWZDg/S45/brett.png"
+  }
+]
+```
+
+| Descrição |
+| :--------- |
+| Será retornado um array com todos os usuários do banco de dados |
+
+### Retorna um usuário
+
+```http
+  GET /user/${id}
+```
+
+**⚠️ Para fazer uma requisição é necessário estar com a chave `Authentication` com o token JWT recebido anteriormente**
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `id`      | `string` | **Obrigatório**. O ID do usuário que você quer |
+
+**Retorno em caso de sucesso**
+
+```json
+{
+  "id": "401465483996",
+  "displayName": "Brett Wiltshire",
+  "email": "brett@email.com",
+  "image": "http://4.bp.blogspot.com/_YA50adQ-7vQ/S1gfR_6ufpI/AAAAAAAAAAk/1ErJGgRWZDg/S45/brett.png"
+}
+```
+
+| Descrição |
+| :--------- |
+| Será retornado o usuário com o id especificado |
+
+### Logar de acordo com o banco de dados
+
+```http
+  POST /login
+```
+
+| Corpo da requisição   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `email, password`      | `json` | **Obrigatório**. Todos os campos do Corpo da requisição devem existir no banco de dados |
+
+**Formato do corpo da requisição**
+
+```json
+{
+  "email": "email@mail.com",
+  "password": "123456"
+}
+```
+
+**Retorno em caso de sucesso**
+
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjo1LCJkaXNwbGF5TmFtZSI6InVzdWFyaW8gZGUgdGVzdGUiLCJlbWFpbCI6InRlc3RlQGVtYWlsLmNvbSIsImltYWdlIjoibnVsbCJ9LCJpYXQiOjE2MjAyNDQxODcsImV4cCI6MTYyMDY3NjE4N30.Roc4byj6mYakYqd9LTCozU1hd9k_Vw5IWKGL4hcCVG8"
+}
+```
+
+> O retorno acima é apenas fictício
+
+## Cadastra uma nova categoria
+
+```http
+  POST /categories
+```
+
+| Corpo da requisição   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `name` | `json` | **Obrigatório**. O nome da categoria deve ser obrigatório |
+
+**⚠️ Para fazer uma requisição é necessário estar com a chave `Authentication` com o token JWT recebido anteriormente**
+
+**Formato do corpo da requisição**
+
+```json
+ {
+   "name": "Ação"
+ }
+```
+
+**Retorno em caso de sucesso**
+
+```json
+{
+  "id": 1
+  "name": "Ação"
+}
+```
+
+## Retorna todas as categorias
+
+```http
+  GET /categories
+```
+
+**⚠️ Para fazer uma requisição é necessário estar com a chave `Authentication` com o token JWT recebido anteriormente**
+
+**Retorno em caso de sucesso**
+
+```json
+[
+  {
+    "id": 1,
+    "name": "Escola"
+  },
+  {
+    "id": 2,
+    "name": "Inovação"
+  }
+]
+```
+
+| Descrição |
+| :--------- |
+| Será retornado todas as categorias do Banco de Dados |
+
+### Cadastra uma nova publicação
+
+```http
+  POST /post
+```
+
+| Corpo da requisição   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `title, content, categoryIds` | json | **Obrigatório**. Todos os campos devem ser obrigatórios |
+
+**⚠️ Para fazer uma requisição é necessário estar com a chave `Authentication` com o token JWT recebido anteriormente**
+
+**Formato do corpo da requisição**
+
+```json
+{
+  "title": "Titulo da publicação",
+  "content": "Conteudo da publicação aqui",
+  "categoryIds": [1, 2] //id das categorias criadas anteiormente, deve ser somente um array.
+}
+```
+
+**Retorno em caso de sucesso**
+```json
+{
+  "id": "$id da publicação",
+  "userId": 1, // usuário autenticado
+  "title": "Titulo da publicação",
+  "content": "Conteudo da publicação aqui"
+}
+```
+
+## Retorna todos as publicações
+
+```http
+  GET /categories
+```
+
+**⚠️ Para fazer uma requisição é necessário estar com a chave `Authentication` com o token JWT recebido anteriormente**
+
+**Retorno em caso de sucesso**
+
+```json
+[
+  {
+    "id": 1,
+    "title": "Post do Ano",
+    "content": "Melhor post do ano",
+    "userId": 1,
+    "published": "2011-08-01T19:58:00.000Z",
+    "updated": "2011-08-01T19:58:51.000Z",
+    "user": {
+      "id": 1,
+      "displayName": "Lewis Hamilton",
+      "email": "lewishamilton@gmail.com",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2017_Malaysia.jpg"
+    },
+    "categories": [
+      {
+        "id": 1,
+        "name": "Inovação"
+      }
+    ]
+  }
+]
+```
+
+| Descrição |
+| :--------- |
+| Será retornado todas as publicações do Banco de Dados, com sua categoria e o autor |
+
 
 
 ## Feito Com:
